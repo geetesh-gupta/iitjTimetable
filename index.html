@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<base target="_top">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+<style>
+/* Dropdown Button */
+.dropbtn {
+color: white;
+padding: 16px;
+font-size: 16px;
+border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+position: relative;
+display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+display: none;
+position: absolute;
+background-color: #f1f1f1;
+min-width: 160px;
+box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+color: black;
+padding: 12px 16px;
+text-decoration: none;
+display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+
+</style>
+</head>
+<body>
+<? var timeTable = myFunction(); ?>
+<? for (var i = 0; i < timeTable.length; i++) {?>
+<center>
+  <div class="container my-3">
+  <? var id = timeTable[i][0][2].toString().replace(/\./g, '')+timeTable[i][0][0]+timeTable[i][0][1] ?>       
+  <a href="#" onclick="tableToggle(document.getElementById('<?= id ?>'));return false;"><?= timeTable[i][0][2]+'/'+timeTable[i][0][0]+'/Sem'+timeTable[i][0][1] ?></a>
+  <br>
+  <table class="table" id="<?= id ?>" style="display:none">
+    <tr>
+    <? for (var k=0; k<timeTable[i][1].length; k++) { ?>
+    <th>
+    <center>
+    <?= timeTable[i][1][k] ?>
+    </center>
+    </th>
+    <? }?>
+    </tr>
+    
+    <? for (var j=2; j<timeTable[i].length-2; j++) { ?>
+    <tr>
+    <th><?= timeTable[i][j][0] ?></th>
+    <? for (var k=1; k<timeTable[i][j].length; k++) { ?>
+    <? if ((timeTable[i][j][k][0].indexOf('EE213')>-1 || timeTable[i][j][k][0].indexOf('ME213')>-1) && (k == 4)){?>
+    <td></td>
+    <? } else if (timeTable[i][j][k] == 'Lunch Break'){?>
+    <td colspan="5" style="text-align:center">Lunch Break</td>
+    <? } else{?>
+    <? if (k != 0){ ?>
+    <td style="text-align:center"><div class="dropdown"><a class="dropbtn"><?= timeTable[i][j][k][0] ?></a><div class="dropdown-content"><div><?= timeTable[i][j][k][1] ?></div><div><?= timeTable[i][j][k][2] ?></div><div><?= timeTable[i][j][k][3] ?></div></div></div></td>
+    <? }else{ ?>
+    <td style="text-align:center"><?= timeTable[i][j][k][0] ?></td>
+    <? } ?>
+    <? }?>
+    <? } ?>
+    </tr>
+    
+    <? } ?>
+ </table>
+ </div> 
+</center>
+<? } ?>
+<br><br>
+<div> Creator -- Geetesh Gupta</div>
+<br>
+<script>
+function tableToggle(id){
+ if (id.style.display == 'none')
+  id.style.display = '';
+ else
+  id.style.display = 'none';
+ return false;
+}
+</script>
+</body>
+</html>
+
+
